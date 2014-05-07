@@ -1,4 +1,4 @@
 cron:
   - description: ping urls to keep the apps alive
     url: /ping
-    schedule: every 1 minutes
+    schedule: every 6 hours
