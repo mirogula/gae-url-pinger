@@ -24,7 +24,7 @@ class Pinger(webapp2.RequestHandler):
 
 application = webapp2.WSGIApplication(
 	[
-		(r'/', Pinger)
+		('/ping', Pinger)
 	], 
 	debug=True)
 
