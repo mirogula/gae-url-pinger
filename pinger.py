@@ -5,7 +5,10 @@ import traceback
 import webapp2
 
 
-urls = ['http://google.com', 'http://www.voidspace.org.uk']
+urls = [
+		'https://jenkins-mirogula.rhcloud.com', 
+		'https://nexus-mirogula.rhcloud.com'
+	]
 
 
 class Pinger(webapp2.RequestHandler):
@@ -15,10 +18,14 @@ class Pinger(webapp2.RequestHandler):
 			try :
 				req = urllib2.Request(url)
 				response = urllib2.urlopen(req)
-				the_page = response.read()
-				logging.info('url: '+url+'\ncontent:\n'+the_page);
+				content = response.read()
+				headers = ''.join(response.info().headers)
+				logging.info('\n===URL===\n'+url
+					+'\n===HEADERS===\n'+headers
+					+'===CONTENT===\n'+content)
 			except:
-				logging.error('url: '+url+'\nexception:\n'+traceback.format_exc())
+				logging.error('\n===URL===\n'+url
+					+'\n===EXCEPTION===\n'+traceback.format_exc())
 
 
 
