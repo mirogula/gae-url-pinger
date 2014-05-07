@@ -6,7 +6,7 @@ import webapp2
 
 
 urls = [
-		'https://jenkins-mirogula.rhcloud.com', 
+		'https://jenkins-mirogula.rhcloud.com/login',
 		'https://nexus-mirogula.rhcloud.com'
 	]
 
@@ -18,11 +18,16 @@ class Pinger(webapp2.RequestHandler):
 			try :
 				req = urllib2.Request(url)
 				response = urllib2.urlopen(req)
-				content = response.read()
+				body = response.read()
 				headers = ''.join(response.info().headers)
 				logging.info('\n===URL===\n'+url
 					+'\n===HEADERS===\n'+headers
-					+'===CONTENT===\n'+content)
+					+'===BODY===\n'+body)
+			except urllib2.HTTPError as e:
+				logging.warning('HTTP error occurred:'
+					+'\n===URL===\n'+url
+					+'\n===STATUS CODE===\n'+str(e.code)
+					+'\n===BODY===\n'+e.read())	
 			except:
 				logging.error('\n===URL===\n'+url
 					+'\n===EXCEPTION===\n'+traceback.format_exc())
